@@ -1,0 +1,6 @@
+[package]
+name = "sabiwm"
+version = "0.0.1"
+authors = ["Simon Wollwage <mail.wollwage@gmail.com>"]
+
+[dependencies]
