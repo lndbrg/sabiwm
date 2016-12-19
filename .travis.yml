@@ -1,7 +1,7 @@
 language: rust
 before_install:
   - sudo apt-get -qq update
-  - sudo apt-get install y libxcb1-dev python3
+  - sudo apt-get install -y libxcb1-dev python3
 rust:
   - stable
   - beta
