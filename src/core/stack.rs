@@ -47,11 +47,13 @@ impl<T: Clone + Eq> Stack<T> {
 
     /// Flatten the stack into a list
     pub fn integrate<C: FromIterator<T>>(&self) -> C {
-        // let mut result = self.up.iter().rev().cloned().collect::<Vec<_>>();
-        // result.push(self.focus.clone());
-        // result.extend(self.down.iter().cloned());
-        // result
-        self.up.iter().rev().chain(self.down).cloned().collect()
+        self.up
+            .iter()
+            .rev()
+            .chain(vec![self.focus.clone()].iter())
+            .chain(self.down.iter())
+            .cloned()
+            .collect()
     }
 
     /// Filter the stack to retain only windows
