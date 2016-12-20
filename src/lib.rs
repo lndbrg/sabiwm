@@ -9,6 +9,7 @@ extern crate xdg;
 #[macro_use]
 extern crate error_chain;
 
+pub mod backend;
 pub mod core;
 
 mod errors {
