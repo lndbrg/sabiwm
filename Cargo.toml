@@ -11,3 +11,12 @@ slog-scope = "0.2"
 slog-stream = "1.2"
 xcb = "0.7"
 xdg = "2.0.0"
+
+[lib]
+doc = true
+doctest = true
+
+[[bin]]
+name = "sabiwm"
+path = "src/bin/sabiwm.rs"
+doc = false
