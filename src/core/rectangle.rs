@@ -1,4 +1,5 @@
 /// A simple rectangle. Not much to talk about.
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct Rectangle {
     x: i32,
     y: i32,
