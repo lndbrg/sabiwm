@@ -9,16 +9,15 @@ extern crate xdg;
 #[macro_use]
 extern crate error_chain;
 
-mod core;
+pub mod core;
+
 mod errors {
     error_chain!{}
 }
 
 use errors::*;
-use std::ffi::OsString;
-use std::env::var_os;
 use std::fs::File;
-use slog::{Logger, Drain, DrainExt};
+use slog::{Logger, DrainExt};
 use slog_stream::stream;
 use slog_scope::set_global_logger;
 use xdg::BaseDirectories;
