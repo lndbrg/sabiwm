@@ -1,4 +1,4 @@
-#[macro_use(o, slog_log, slog_info)]
+#[macro_use(o, slog_log, slog_debug, slog_trace, slog_warn, slog_error, slog_info)]
 extern crate slog;
 extern crate slog_json;
 #[macro_use]
@@ -24,7 +24,12 @@ use slog_scope::set_global_logger;
 use xdg::BaseDirectories;
 
 pub fn run() -> Result<()> {
-    initialize_logger().chain_err(|| "unable to initialize logger")
+    initialize_logger().chain_err(|| "unable to initialize logger")?;
+
+    let stack = core::Stack::from(42u32);
+    let vec: Vec<_> = stack.add(17).integrate();
+
+    Ok(())
 }
 
 pub fn initialize_logger() -> Result<()> {

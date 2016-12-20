@@ -1,19 +1,21 @@
 use std::iter::FromIterator;
+use std::fmt::Debug;
 
 /// Handles focus tracking on a workspace.
 /// `focus` keeps track of the focused window's id
 /// and `up` and `down` are the windows above or
 /// below the focus stack respectively.
-#[derive(Clone, PartialEq, Eq)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Stack<T> {
     pub focus: T,
     pub up: Vec<T>,
     pub down: Vec<T>,
 }
 
-impl<T: Clone + Eq> Stack<T> {
+impl<T: Debug + Copy + Clone + Eq> Stack<T> {
     /// Create a new stack with the given values
     pub fn new(f: T, up: Vec<T>, down: Vec<T>) -> Stack<T> {
+        trace!("creating new stack from {:?}/{:?}/{:?}", f, up, down);
         Stack {
             focus: f,
             up: up,
@@ -21,19 +23,10 @@ impl<T: Clone + Eq> Stack<T> {
         }
     }
 
-    /// Create a new stack with only the given element
-    /// as the focused one and initialize the rest to empty.
-    pub fn from_element(t: T) -> Stack<T> {
-        Stack {
-            focus: t,
-            up: Vec::new(),
-            down: Vec::new(),
-        }
-    }
-
     /// Add a new element to the stack
     /// and automatically focus it.
     pub fn add(&self, t: T) -> Stack<T> {
+        trace!("adding {:?} to stack", t);
         Stack {
             focus: t,
             up: self.up.clone(),
@@ -47,6 +40,7 @@ impl<T: Clone + Eq> Stack<T> {
 
     /// Flatten the stack into a list
     pub fn integrate<C: FromIterator<T>>(&self) -> C {
+        debug!("integrating stack");
         self.up
             .iter()
             .rev()
@@ -174,5 +168,18 @@ impl<T: Clone + Eq> Stack<T> {
     /// Checks if the given window is tracked by the stack
     pub fn contains(&self, window: T) -> bool {
         self.focus == window || self.up.contains(&window) || self.down.contains(&window)
+    }
+}
+
+impl<T> From<T> for Stack<T> {
+    /// Create a new stack with only the given element
+    /// as the focused one and initialize the rest to empty.
+    fn from(t: T) -> Stack<T> {
+        trace!("creating new stack");
+        Stack {
+            focus: t,
+            up: Vec::new(),
+            down: Vec::new(),
+        }
     }
 }
