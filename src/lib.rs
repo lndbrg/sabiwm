@@ -18,7 +18,7 @@ mod errors {
 
 use errors::*;
 use std::fs::File;
-use slog::{Logger, DrainExt};
+use slog::{Level, Logger, DrainExt, level_filter};
 use slog_stream::stream;
 use slog_scope::set_global_logger;
 use xdg::BaseDirectories;
@@ -27,7 +27,9 @@ pub fn run() -> Result<()> {
     initialize_logger().chain_err(|| "unable to initialize logger")?;
 
     let stack = core::Stack::from(42u32);
-    let vec: Vec<_> = stack.add(17).integrate();
+    let _: Vec<_> = stack.add(17).reverse().integrate();
+    let workspace = core::Workspace::new(42, "MyTag".into(), Some(stack));
+    workspace.add(23).remove(17).contains(23);
 
     Ok(())
 }
@@ -39,7 +41,8 @@ pub fn initialize_logger() -> Result<()> {
         .chain_err(|| "unable to get path for log file")?;
     let file = File::create(path).chain_err(|| "unable to create log file")?;
     let file_logger = stream(file, ::slog_json::new().add_default_keys().build());
-    let logger = Logger::root(file_logger.ignore_err(),
+    let filter_logger = level_filter(Level::Trace, file_logger);
+    let logger = Logger::root(filter_logger.ignore_err(),
                               o!("sabiwm" => env!("CARGO_PKG_VERSION")));
 
     set_global_logger(logger);

@@ -15,7 +15,7 @@ pub struct Stack<T> {
 impl<T: Debug + Copy + Clone + Eq> Stack<T> {
     /// Create a new stack with the given values
     pub fn new(f: T, up: Vec<T>, down: Vec<T>) -> Stack<T> {
-        trace!("creating new stack from {:?}/{:?}/{:?}", f, up, down);
+        trace!("creating new stack from {:?}/{:?}/{:?}", up, f, down);
         Stack {
             focus: f,
             up: up,
@@ -40,7 +40,7 @@ impl<T: Debug + Copy + Clone + Eq> Stack<T> {
 
     /// Flatten the stack into a list
     pub fn integrate<C: FromIterator<T>>(&self) -> C {
-        debug!("integrating stack");
+        trace!("integrating stack");
         self.up
             .iter()
             .rev()
@@ -55,6 +55,7 @@ impl<T: Debug + Copy + Clone + Eq> Stack<T> {
     pub fn filter<F>(&self, f: F) -> Option<Stack<T>>
         where F: Fn(&T) -> bool
     {
+        trace!("filtering stack");
         let lrs: Vec<T> = (vec![self.focus.clone()])
             .iter()
             .chain(self.down.iter())
@@ -72,14 +73,17 @@ impl<T: Debug + Copy + Clone + Eq> Stack<T> {
                 .collect();
             let stack: Stack<T> = Stack::<T>::new(first, filtered, rest);
 
+            trace!("stack after filtering non-empty");
             Some(stack)
         } else {
             let filtered: Vec<T> = self.up.clone().into_iter().filter(|x| f(x)).collect();
             if filtered.len() > 0 {
                 let first: T = filtered[0].clone();
                 let rest: Vec<T> = filtered.iter().skip(1).cloned().collect();
+                trace!("stack after filtering non-empty");
                 Some(Stack::<T>::new(first, rest, Vec::new()))
             } else {
+                trace!("stack after filtering empty");
                 None
             }
         }
@@ -87,6 +91,7 @@ impl<T: Debug + Copy + Clone + Eq> Stack<T> {
 
     /// Move the focus to the next element in the `up` list
     pub fn focus_up(&self) -> Stack<T> {
+        trace!("focusing up in stack");
         if self.up.is_empty() {
             let tmp: Vec<T> = (vec![self.focus.clone()])
                 .into_iter()
@@ -111,6 +116,7 @@ impl<T: Debug + Copy + Clone + Eq> Stack<T> {
 
     /// Move the focus down
     pub fn focus_down(&self) -> Stack<T> {
+        trace!("focusing down in stack. reversing, focussing up, reversing back");
         self.reverse().focus_up().reverse()
     }
 
@@ -157,6 +163,10 @@ impl<T: Debug + Copy + Clone + Eq> Stack<T> {
     /// Reverse the stack by exchanging
     /// the `up` and `down` lists
     pub fn reverse(&self) -> Stack<T> {
+        trace!("reversing stack {:?}/{:?}/{:?}",
+               self.up,
+               self.focus,
+               self.down);
         Stack::<T>::new(self.focus.clone(), self.down.clone(), self.up.clone())
     }
 
@@ -167,6 +177,7 @@ impl<T: Debug + Copy + Clone + Eq> Stack<T> {
 
     /// Checks if the given window is tracked by the stack
     pub fn contains(&self, window: T) -> bool {
+        trace!("checking if stack contains {:?}", window);
         self.focus == window || self.up.contains(&window) || self.down.contains(&window)
     }
 }

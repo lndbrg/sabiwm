@@ -1,3 +1,8 @@
+//! Events are used so that backends (X11, XCB, Wayland) can
+//! report back to the window manager if something changed, e.g.
+//! new windows got created, a window got closed or if
+//! some user input happened.
+
 use core::Rectangle;
 
 /// A cross-section of all events that can be generated/handled

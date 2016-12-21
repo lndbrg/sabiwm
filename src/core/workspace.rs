@@ -3,7 +3,12 @@ use core::Stack;
 use std::fmt::Debug;
 
 /// Represents a single workspace with a `tag` (name),
-/// `id`, a `layout` and a `stack` for all windows
+/// `id`, a `layout` and a `stack` for all windows.
+/// A workspace is in charge of all windows belonging
+/// to that workspace. At each time, a single screen
+/// holds one workspace, while all the other
+/// workspaces are hidden in the background, while
+/// still being managed.
 pub struct Workspace<Window> {
     pub id: u32,
     pub tag: String,
@@ -20,7 +25,7 @@ impl<Window: Clone> Clone for Workspace<Window> {
     }
 }
 
-impl<Window: Copy + Clone + Eq + Debug> Workspace<Window> {
+impl<Window: Copy + Clone + PartialEq + Eq + Debug> Workspace<Window> {
     /// Create a new workspace
     ///
     /// # Examples
@@ -32,6 +37,7 @@ impl<Window: Copy + Clone + Eq + Debug> Workspace<Window> {
     /// assert_eq!(1, workspace.len());
     /// ```
     pub fn new(id: u32, tag: String, stack: Option<Stack<Window>>) -> Workspace<Window> {
+        trace!("workspace_tag" => tag, "workspace_id" => id; "creating new workspace");
         Workspace {
             id: id,
             tag: tag,
@@ -50,11 +56,19 @@ impl<Window: Copy + Clone + Eq + Debug> Workspace<Window> {
     /// assert_eq!(0, workspace.len());
     /// ```
     pub fn add(&self, window: Window) -> Workspace<Window> {
+        trace!("workspace_tag" => self.tag, "workspace_id" => self.id; "adding window {:?} to workspace", window);
         Workspace::new(self.id,
                        self.tag.clone(),
                        Some(self.stack
                            .clone()
                            .map_or(Stack::from(window), |s| s.add(window))))
+    }
+
+    pub fn remove(&self, window: Window) -> Workspace<Window> {
+        trace!("workspace_tag" => self.tag, "workspace_id" => self.id; "removing window {:?} from workspace", window);
+        Workspace::new(self.id,
+                       self.tag.clone(),
+                       self.stack.clone().map_or(None, |s| s.filter(|&w| w != window)))
     }
 
     /// Returns the number of windows contained in this workspace
@@ -64,6 +78,7 @@ impl<Window: Copy + Clone + Eq + Debug> Workspace<Window> {
 
     /// Checks if the workspace contains the given window
     pub fn contains(&self, window: Window) -> bool {
+        trace!("workspace_tag" => self.tag, "workspace_id" => self.id; "checking if workspace contains window {:?}", window);
         self.stack.clone().map_or(false, |x| x.contains(window))
     }
 
@@ -78,12 +93,14 @@ impl<Window: Copy + Clone + Eq + Debug> Workspace<Window> {
     pub fn map<F>(&self, f: F) -> Workspace<Window>
         where F: Fn(Stack<Window>) -> Stack<Window>
     {
+        trace!("workspace_tag" => self.tag, "workspace_id" => self.id; "mapping over workspace");
         Workspace::new(self.id, self.tag.clone(), self.stack.clone().map(|x| f(x)))
     }
 
     pub fn map_option<F>(&self, f: F) -> Workspace<Window>
         where F: Fn(Stack<Window>) -> Option<Stack<Window>>
     {
+        trace!("workspace_tag" => self.tag, "workspace_id" => self.id; "mapping optional over workspace");
         Workspace::new(self.id,
                        self.tag.clone(),
                        self.stack.clone().map_or(None, |x| f(x)))
@@ -92,6 +109,7 @@ impl<Window: Copy + Clone + Eq + Debug> Workspace<Window> {
     pub fn map_or<F>(&self, default: Stack<Window>, f: F) -> Workspace<Window>
         where F: Fn(Stack<Window>) -> Stack<Window>
     {
+        trace!("workspace_tag" => self.tag, "workspace_id" => self.id; "mapping default over workspace");
         Workspace::new(self.id,
                        self.tag.clone(),
                        Some(self.stack.clone().map_or(default, |x| f(x))))
