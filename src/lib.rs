@@ -17,6 +17,7 @@ mod errors {
 }
 
 use errors::*;
+use backend::{Backend, Event};
 use std::fs::File;
 use slog::{Level, Logger, DrainExt, level_filter};
 use slog_stream::stream;
@@ -26,10 +27,28 @@ use xdg::BaseDirectories;
 pub fn run() -> Result<()> {
     initialize_logger().chain_err(|| "unable to initialize logger")?;
 
-    let stack = core::Stack::from(42u32);
-    let _: Vec<_> = stack.add(17).reverse().integrate();
-    let workspace = core::Workspace::new(42, "MyTag".into(), Some(stack));
-    workspace.add(23).remove(17).contains(23);
+    let xcb = backend::Xcb::new()?;
+    let mut workspace : core::Workspace<u32> = core::Workspace::new(0, "Main", None);
+
+    loop {
+        match xcb.event() {
+            Event::WindowCreated(window) => {
+                if !xcb.is_window(window) {
+                    continue;
+                }
+                xcb.resize_window(window, 50, 50);
+                workspace = workspace.add(window);
+            }
+            Event::WindowClosed(window) => {
+                workspace = workspace.remove(window);
+            }
+            //Event::UnknownEvent => {
+            //    error!("unknown event");
+            //    bail!("unknown event type");
+            //}
+            _ => ()
+        }
+    }
 
     Ok(())
 }
