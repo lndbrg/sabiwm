@@ -6,7 +6,7 @@ extern crate slog_scope;
 
 fn main() {
     if let Err(ref e) = ::sabiwm::run() {
-        error!("{}", e);
+        error!("sabiwm stopped: {}", e);
         for e in e.iter().skip(1) {
             error!("caused by: {}", e);
         }
