@@ -36,7 +36,8 @@ impl<Window: Copy + Clone + PartialEq + Eq + Debug> Workspace<Window> {
     /// let workspace = Workspace::new(0, "Desktop 0".into(), Some(stack));
     /// assert_eq!(1, workspace.len());
     /// ```
-    pub fn new(id: u32, tag: String, stack: Option<Stack<Window>>) -> Workspace<Window> {
+    pub fn new<S: Into<String>>(id: u32, tag: S, stack: Option<Stack<Window>>) -> Workspace<Window> {
+        let tag = tag.into();
         trace!("workspace_tag" => tag, "workspace_id" => id; "creating new workspace");
         Workspace {
             id: id,

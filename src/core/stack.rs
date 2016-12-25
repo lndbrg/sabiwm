@@ -121,6 +121,7 @@ impl<T: Debug + Copy + Clone + Eq> Stack<T> {
     }
 
     pub fn swap_up(&self) -> Stack<T> {
+        trace!("swapping up in stack");
         if self.up.is_empty() {
             Stack::<T>::new(self.focus.clone(),
                             self.down.iter().rev().cloned().collect(),
@@ -134,10 +135,12 @@ impl<T: Debug + Copy + Clone + Eq> Stack<T> {
     }
 
     pub fn swap_down(&self) -> Stack<T> {
+        trace!("swapping down in stack. reversing, swapping up, reversing back");
         self.reverse().swap_up().reverse()
     }
 
     pub fn swap_master(&self) -> Stack<T> {
+        trace!("swapping stack to master");
         if self.up.is_empty() {
             return self.clone();
         }
@@ -182,11 +185,11 @@ impl<T: Debug + Copy + Clone + Eq> Stack<T> {
     }
 }
 
-impl<T> From<T> for Stack<T> {
+impl<T: Debug> From<T> for Stack<T> {
     /// Create a new stack with only the given element
     /// as the focused one and initialize the rest to empty.
     fn from(t: T) -> Stack<T> {
-        trace!("creating new stack");
+        trace!("creating new stack from {:?}", t);
         Stack {
             focus: t,
             up: Vec::new(),

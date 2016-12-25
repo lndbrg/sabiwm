@@ -35,6 +35,23 @@ impl Rectangle {
         }
     }
 
+    /// Checks if the given coordinates are within the rectangle
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use sabiwm::core::Rectangle;
+    /// let rectangle = Rectangle::new(10, 10, 20, 10);
+    /// assert_eq!(true, rectangle.is_inside(12, 15));
+    /// assert_eq!(false, rectangle.is_inside(12, 21));
+    /// ```
+    ///
+    /// # Arguments 
+    /// `x` - x coordinate of point
+    /// `y` - y coordinate of point
+    ///
+    /// # Return value
+    /// `true` if point is inside, `false` otherwise
     pub fn is_inside(&self, x: i32, y: i32) -> bool {
         let horizontal = x >= self.x && x <= self.right();
         let vertical = y >= self.y && y <= self.bottom();
