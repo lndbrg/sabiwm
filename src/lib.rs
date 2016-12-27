@@ -28,7 +28,7 @@ pub fn run() -> Result<()> {
     initialize_logger().chain_err(|| "unable to initialize logger")?;
 
     let xcb = backend::Xcb::new()?;
-    let mut workspace : core::Workspace<u32> = core::Workspace::new(0, "Main", None);
+    let mut workspace: core::Workspace<u32> = core::Workspace::new(0, "Main", None);
 
     loop {
         match xcb.event() {
@@ -49,8 +49,6 @@ pub fn run() -> Result<()> {
             _ => ()
         }
     }
-
-    Ok(())
 }
 
 pub fn initialize_logger() -> Result<()> {

@@ -46,7 +46,7 @@ impl Rectangle {
     /// assert_eq!(false, rectangle.is_inside(12, 21));
     /// ```
     ///
-    /// # Arguments 
+    /// # Arguments
     /// `x` - x coordinate of point
     /// `y` - y coordinate of point
     ///
