@@ -33,10 +33,13 @@ impl<Window: Copy + Clone + PartialEq + Eq + Debug> Workspace<Window> {
     /// ```
     /// # use sabiwm::core::{Stack, Workspace};
     /// let stack = Stack::from(42u32);
-    /// let workspace = Workspace::new(0, "Desktop 0".into(), Some(stack));
+    /// let workspace = Workspace::new(0, "Desktop 0", Some(stack));
     /// assert_eq!(1, workspace.len());
     /// ```
-    pub fn new<S: Into<String>>(id: u32, tag: S, stack: Option<Stack<Window>>) -> Workspace<Window> {
+    pub fn new<S: Into<String>>(id: u32,
+                                tag: S,
+                                stack: Option<Stack<Window>>)
+                                -> Workspace<Window> {
         let tag = tag.into();
         trace!("workspace_tag" => tag, "workspace_id" => id; "creating new workspace");
         Workspace {
@@ -53,7 +56,7 @@ impl<Window: Copy + Clone + PartialEq + Eq + Debug> Workspace<Window> {
     ///
     /// ```
     /// # use sabiwm::core::Workspace;
-    /// let workspace : Workspace<u32> = Workspace::new(0, "Desktop 0".into(), None);
+    /// let workspace : Workspace<u32> = Workspace::new(0, "Desktop 0", None);
     /// assert_eq!(0, workspace.len());
     /// ```
     pub fn add(&self, window: Window) -> Workspace<Window> {
