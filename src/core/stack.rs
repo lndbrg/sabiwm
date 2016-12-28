@@ -5,6 +5,14 @@ use std::fmt::Debug;
 /// `focus` keeps track of the focused window's id
 /// and `up` and `down` are the windows above or
 /// below the focus stack respectively.
+///
+/// # Immutable
+///
+/// Note that this [`Stack`] implementation is immutable
+/// and that each operation that would modify it, instead
+/// returns a new copy of the [`Stack`] with the modified state.
+///
+/// [`Stack`]: struct.Stack.html
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Stack<T> {
     pub focus: T,
@@ -14,17 +22,56 @@ pub struct Stack<T> {
 
 impl<T: Debug + Copy + Clone + Eq> Stack<T> {
     /// Create a new stack with the given values
-    pub fn new(f: T, up: Vec<T>, down: Vec<T>) -> Stack<T> {
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use sabiwm::core::Stack;
+    /// let stack = Stack::new(0, Vec::new(), Vec::new());
+    /// ```
+    ///
+    /// # Arguments
+    ///
+    /// `f` - the focussed element to start with
+    /// `up` - vector of all elements up the stack
+    /// `down` - vector of all elements down the stack
+    ///
+    /// # Return value
+    ///
+    /// A new [`Stack`]
+    ///
+    /// [`Stack`]: struct.Stack.html
+    pub fn new<S: Debug + IntoIterator<Item = T>>(f: T, up: S, down: S) -> Stack<T> {
         trace!("creating new stack from {:?}/{:?}/{:?}", up, f, down);
         Stack {
             focus: f,
-            up: up,
-            down: down,
+            up: up.into_iter().collect(),
+            down: down.into_iter().collect(),
         }
     }
 
     /// Add a new element to the stack
     /// and automatically focus it.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use sabiwm::core::Stack;
+    /// let stack = Stack::from(42);
+    /// let new_stack = stack.add(23);
+    ///
+    /// assert_eq!(2, new_stack.len());
+    /// ```
+    ///
+    /// # Arguments
+    ///
+    /// `t` - the new element to add
+    ///
+    /// # Return value
+    ///
+    /// The new modified [`Stack`]
+    ///
+    /// [`Stack`]: struct.Stack.html
     pub fn add(&self, t: T) -> Stack<T> {
         trace!("adding {:?} to stack", t);
         Stack {
@@ -38,7 +85,23 @@ impl<T: Debug + Copy + Clone + Eq> Stack<T> {
         }
     }
 
-    /// Flatten the stack into a list
+    /// Flatten the stack into a new container
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use sabiwm::core::Stack;
+    /// let stack = Stack::new(1, vec![2,3], vec![4,5]);
+    /// let v = stack.integrate::<Vec<_>>();
+    ///
+    /// assert_eq!(vec![3,2,1,4,5], v);
+    /// ```
+    ///
+    /// # Return value
+    ///
+    /// A collection of a flattened [`Stack`]
+    ///
+    /// [`Stack`]: struct.Stack.html
     pub fn integrate<C: FromIterator<T>>(&self) -> C {
         trace!("integrating stack");
         self.up
@@ -51,7 +114,26 @@ impl<T: Debug + Copy + Clone + Eq> Stack<T> {
     }
 
     /// Filter the stack to retain only windows
-    /// that yield true in the given filter function
+    /// that yield true in the given filter function.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use sabiwm::core::Stack;
+    /// let stack = Stack::new(1, vec![2,3,4], vec![5,6,7]);
+    /// let even_stack = stack.filter(|x| x % 2 == 0).unwrap();
+    ///
+    /// assert_eq!(vec![4,2,6], even_stack.integrate::<Vec<_>>());
+    /// ```
+    ///
+    /// # Arguments
+    ///
+    /// `f` - the filter function to use for filtering
+    ///
+    /// # Return value
+    ///
+    /// Returns `Some(Stack)` if there are still items left after filtering
+    /// or `None` if there is no element left after filtering.
     pub fn filter<F>(&self, f: F) -> Option<Stack<T>>
         where F: Fn(&T) -> bool
     {
@@ -105,7 +187,7 @@ impl<T: Debug + Copy + Clone + Eq> Stack<T> {
 
             Stack::<T>::new(tmp[0], xs, Vec::new())
         } else {
-            let down = (vec![self.focus])
+            let down: Vec<T> = (vec![self.focus])
                 .into_iter()
                 .chain(self.down.clone().into_iter())
                 .collect();
@@ -128,8 +210,8 @@ impl<T: Debug + Copy + Clone + Eq> Stack<T> {
                             Vec::new())
         } else {
             let x = self.up[0];
-            let xs = self.up.iter().skip(1).cloned().collect();
-            let rs = (vec![x]).into_iter().chain(self.down.clone().into_iter()).collect();
+            let xs: Vec<T> = self.up.iter().skip(1).cloned().collect();
+            let rs: Vec<T> = (vec![x]).into_iter().chain(self.down.clone().into_iter()).collect();
             Stack::<T>::new(self.focus, xs, rs)
         }
     }
@@ -178,14 +260,46 @@ impl<T: Debug + Copy + Clone + Eq> Stack<T> {
         1 + self.up.len() + self.down.len()
     }
 
+    /// Checks if the [`Stack`] is empty
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use sabiwm::core::Stack;
+    /// let stack = Stack::from(42);
+    /// assert_eq!(false, stack.is_empty());
+    /// ```
+    ///
+    /// # Return value
+    ///
+    /// `true` if the [`Stack`] is empty, `false` otherwise
+    ///
+    /// [`Stack`]: struct.Stack.html
     pub fn is_empty(&self) -> bool {
         self.len() == 0
     }
 
     /// Checks if the given window is tracked by the stack
-    pub fn contains(&self, window: T) -> bool {
-        trace!("checking if stack contains {:?}", window);
-        self.focus == window || self.up.contains(&window) || self.down.contains(&window)
+    ///
+    /// ```
+    /// # use sabiwm::core::Stack;
+    /// let stack = Stack::from(42);
+    /// assert_eq!(true, stack.contains(42));
+    /// assert_eq!(false, stack.contains(23));
+    /// ```
+    ///
+    /// # Arguments
+    ///
+    /// `t` - the element to search for
+    ///
+    /// # Return value
+    ///
+    /// `true` if the [`Stack`] contains the given element
+    ///
+    /// [`Stack`]: struct.Stack.html
+    pub fn contains(&self, t: T) -> bool {
+        trace!("checking if stack contains {:?}", t);
+        self.integrate::<Vec<_>>().contains(&t)
     }
 }
 
