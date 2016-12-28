@@ -9,6 +9,14 @@ use std::fmt::Debug;
 /// holds one workspace, while all the other
 /// workspaces are hidden in the background, while
 /// still being managed.
+///
+/// # Immutable
+///
+/// Note that this [`Workspace`] implementation is immutable
+/// and that each operation that would modify it, instead
+/// returns a new copy of the [`Workspace`] with the modified state.
+///
+/// [`Workspace`]: struct.Stack.html
 pub struct Workspace<Window> {
     pub id: u32,
     pub tag: String,

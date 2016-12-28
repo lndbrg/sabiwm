@@ -1,14 +1,23 @@
+//! The backend module contains everything
+//! related to windowing operations, e.g.
+//! talk to Xlib, xcb or Wayland.
+//!
+//! For that, it offers a general [`Backend`] trait
+//! that can be implemented for different kinds of backends,
+//! e.g. XCB.
+
 mod event;
 mod xcb;
 
 pub use backend::event::Event;
 pub use backend::xcb::Xcb;
 
-// use backend::Event;
 use core::Rectangle;
 use errors::*;
 
 /// A general trait for all backends (X11, XCB, Wayland)
+///
+///
 pub trait Backend {
     type Window;
 

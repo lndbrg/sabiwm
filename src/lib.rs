@@ -24,6 +24,7 @@ use slog_stream::stream;
 use slog_scope::set_global_logger;
 use xdg::BaseDirectories;
 
+/// Run the actual window manager
 pub fn run() -> Result<()> {
     initialize_logger().chain_err(|| "unable to initialize logger")?;
 
@@ -42,15 +43,16 @@ pub fn run() -> Result<()> {
             Event::WindowClosed(window) => {
                 workspace = workspace.remove(window);
             }
-            //Event::UnknownEvent => {
+            // Event::UnknownEvent => {
             //    error!("unknown event");
             //    bail!("unknown event type");
-            //}
-            _ => ()
+            // }
+            _ => (),
         }
     }
 }
 
+/// Initialize the logger
 pub fn initialize_logger() -> Result<()> {
     let xdg =
         BaseDirectories::with_prefix("sabiwm").chain_err(|| "unable to get xdg base directory")?;
