@@ -1,11 +1,22 @@
 language: rust
 before_install:
-  - sudo apt-get -qq update
-  - sudo apt-get install -y libxcb1-dev python3
+- sudo apt-get -qq update
+- sudo apt-get install -y libxcb1-dev python3
 rust:
-  - stable
-  - beta
-  - nightly
+- stable
+- beta
+- nightly
+before_script:
+- pip install 'travis-cargo<0.2' --user && export PATH=$HOME/.local/bin:$PATH
+script:
+- cargo build
+- cargo test
+- cargo doc --no-deps
+after_success:
+- travis-cargo --only stable doc-upload
 matrix:
   allow_failures:
-    - rust: nightly
+  - rust: nightly
+env:
+  global:
+    secure: PsgV96DQbj6HzQIDlCVkF61272kLY6wvKJbUv6raL/6CGMUcvIeS/S+9CfY5H3/sdAN4wmETYNn1cnSCBudF60Yg9GBinHnQVK0qXFXFxuK3TIbLX8RYfJ5mpMKLxvCj8EsIVxUrbQaLLo1xmdX3SRuXXn1xYJBBsRnAoey9uG1zNHSAsBbV79XkKboOWO4EoYIjqs+UcI8NoT4oVgC44u+9vca0Z/G7W4QtUXH1JnaKmE3wWnE6t8+8ibgKzF8or/UQBFs9TGCAMF7kr2Eymdk5qVX6+abSETWb6jUm8UHE417YGWmQvsbD8KO63l8AupuA5HBtdmom7rrF2ZVQCRrx76vSAC8mCwwzSKBR+2QADfVNU8Ic8ye7qPHz3C3o2gdnWVvvqVOrL57fUTe2++owSSyIDANwpb3ujtQK883s9qvAubKcfRCBPh/7w5Csbd6w7YpReYtEkl4UrCDQt+/P9pjVFdLi4U7D6yOaEvRDjoNYivLOpnwriJdpbr4cazeKuprgxpO6djUoHNKIhGXqXVo0CO/WiOEzT0PYNgP+LibhW1/TqwXWlDEbT5gmdrp7lFrbay29lLip4ZFnReRxvL1nbIBOGibuZB+lW3HDetO87aBV1LcY1UMXeD2nLteEDptnvFvNPTvHikHyAkzsg8/rjT3s7GRT11km+Co=
