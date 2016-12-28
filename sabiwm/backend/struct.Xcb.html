@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Xcb` struct in crate `sabiwm`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Xcb">
+
+    <title>sabiwm::backend::Xcb - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../index.html'>sabiwm</a>::<wbr><a href='index.html'>backend</a></p><script>window.sidebarCurrent = {name: 'Xcb', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>sabiwm</a>::<wbr><a href='index.html'>backend</a>::<wbr><a class='struct' href=''>Xcb</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-19' class='srclink' href='../../src/sabiwm/src/backend/xcb/mod.rs.html#6-9' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Xcb { /* fields omitted */ }</pre><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='../../sabiwm/backend/trait.Backend.html' title='sabiwm::backend::Backend'>Backend</a> for <a class='struct' href='../../sabiwm/backend/struct.Xcb.html' title='sabiwm::backend::Xcb'>Xcb</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-41' class='srclink' href='../../src/sabiwm/src/backend/xcb/mod.rs.html#54-161' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='associatedtype.Window' class='type'><span id='Window.t' class='invisible'><code>type <a href='../../sabiwm/backend/trait.Backend.html#associatedtype.Window' class='type'>Window</a> = Window</code></span></h4>
+<h4 id='method.new' class='method'><span id='new.v' class='invisible'><code>fn <a href='../../sabiwm/backend/trait.Backend.html#tymethod.new' class='fnname'>new</a>() -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../sabiwm/backend/struct.Xcb.html' title='sabiwm::backend::Xcb'>Xcb</a>, Error&gt;</code></span></h4>
+<div class='docblock'><p>Create a new instance of the Backend. <a href="../../sabiwm/backend/trait.Backend.html#tymethod.new">Read more</a></p>
+</div><h4 id='method.is_dock' class='method'><span id='is_dock.v' class='invisible'><code>fn <a href='../../sabiwm/backend/trait.Backend.html#tymethod.is_dock' class='fnname'>is_dock</a>(&amp;self, window: Self::Window) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+<div class='docblock'><p>Determines if the window represented by the given ID is a dock and should be ignored for layouts, etc. <a href="../../sabiwm/backend/trait.Backend.html#tymethod.is_dock">Read more</a></p>
+</div><h4 id='method.is_window' class='method'><span id='is_window.v' class='invisible'><code>fn <a href='../../sabiwm/backend/trait.Backend.html#tymethod.is_window' class='fnname'>is_window</a>(&amp;self, window: Self::Window) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+<h4 id='method.screens' class='method'><span id='screens.v' class='invisible'><code>fn <a href='../../sabiwm/backend/trait.Backend.html#tymethod.screens' class='fnname'>screens</a>(&amp;self) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='../../sabiwm/core/struct.Rectangle.html' title='sabiwm::core::Rectangle'>Rectangle</a>&gt;</code></span></h4>
+<div class='docblock'><p>Returns a vector of all screens currently handled by the window manager. <a href="../../sabiwm/backend/trait.Backend.html#tymethod.screens">Read more</a></p>
+</div><h4 id='method.number_of_screens' class='method'><span id='number_of_screens.v' class='invisible'><code>fn <a href='../../sabiwm/backend/trait.Backend.html#tymethod.number_of_screens' class='fnname'>number_of_screens</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a></code></span></h4>
+<div class='docblock'><p>Returns the number of screens. Basically just a shorthand for <code>self.screens.len()</code> <a href="../../sabiwm/backend/trait.Backend.html#tymethod.number_of_screens">Read more</a></p>
+</div><h4 id='method.window_name' class='method'><span id='window_name.v' class='invisible'><code>fn <a href='../../sabiwm/backend/trait.Backend.html#tymethod.window_name' class='fnname'>window_name</a>(&amp;self, window: Self::Window) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a></code></span></h4>
+<div class='docblock'><p>Returns the name/title of the given [<code>Window</code>] <a href="../../sabiwm/backend/trait.Backend.html#tymethod.window_name">Read more</a></p>
+</div><h4 id='method.class_name' class='method'><span id='class_name.v' class='invisible'><code>fn <a href='../../sabiwm/backend/trait.Backend.html#tymethod.class_name' class='fnname'>class_name</a>(&amp;self, window: Self::Window) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a></code></span></h4>
+<div class='docblock'><p>Returns the given [<code>Window</code>]s class name. Useful for custom mappings, e.g. always move <code>mpv</code> to workspace 4. <a href="../../sabiwm/backend/trait.Backend.html#tymethod.class_name">Read more</a></p>
+</div><h4 id='method.windows' class='method'><span id='windows.v' class='invisible'><code>fn <a href='../../sabiwm/backend/trait.Backend.html#tymethod.windows' class='fnname'>windows</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;Self::Window&gt;, Error&gt;</code></span></h4>
+<div class='docblock'><p>Returns a vector of all [<code>Window</code>] IDs currently handled by the window manager&#39;s backend. <a href="../../sabiwm/backend/trait.Backend.html#tymethod.windows">Read more</a></p>
+</div><h4 id='method.resize_window' class='method'><span id='resize_window.v' class='invisible'><code>fn <a href='../../sabiwm/backend/trait.Backend.html#tymethod.resize_window' class='fnname'>resize_window</a>(&amp;self, window: Self::Window, width: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>, height: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>)</code></span></h4>
+<div class='docblock'><p>Tells the backend to resize the given [<code>Window</code>] to the given <code>width</code> and <code>height</code>. <a href="../../sabiwm/backend/trait.Backend.html#tymethod.resize_window">Read more</a></p>
+</div><h4 id='method.move_window' class='method'><span id='move_window.v' class='invisible'><code>fn <a href='../../sabiwm/backend/trait.Backend.html#tymethod.move_window' class='fnname'>move_window</a>(&amp;self, window: Self::Window, x: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>, y: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>)</code></span></h4>
+<div class='docblock'><p>Tells the backend to move the [<code>Window</code>] to the given location <a href="../../sabiwm/backend/trait.Backend.html#tymethod.move_window">Read more</a></p>
+</div><h4 id='method.show_window' class='method'><span id='show_window.v' class='invisible'><code>fn <a href='../../sabiwm/backend/trait.Backend.html#tymethod.show_window' class='fnname'>show_window</a>(&amp;self, window: Self::Window)</code></span></h4>
+<div class='docblock'><p>Shows/reveals the window if it has previously been hidden and notifies it about the event. <a href="../../sabiwm/backend/trait.Backend.html#tymethod.show_window">Read more</a></p>
+</div><h4 id='method.hide_window' class='method'><span id='hide_window.v' class='invisible'><code>fn <a href='../../sabiwm/backend/trait.Backend.html#tymethod.hide_window' class='fnname'>hide_window</a>(&amp;self, window: Self::Window)</code></span></h4>
+<div class='docblock'><p>Hides the window if it has previously been shown and notifies it about the event. <a href="../../sabiwm/backend/trait.Backend.html#tymethod.hide_window">Read more</a></p>
+</div><h4 id='method.focus_window' class='method'><span id='focus_window.v' class='invisible'><code>fn <a href='../../sabiwm/backend/trait.Backend.html#tymethod.focus_window' class='fnname'>focus_window</a>(&amp;self, window: Self::Window)</code></span></h4>
+<div class='docblock'><p>Focusses the window, so it is ready to accept direct input <a href="../../sabiwm/backend/trait.Backend.html#tymethod.focus_window">Read more</a></p>
+</div><h4 id='method.event' class='method'><span id='event.v' class='invisible'><code>fn <a href='../../sabiwm/backend/trait.Backend.html#tymethod.event' class='fnname'>event</a>(&amp;self) -&gt; <a class='enum' href='../../sabiwm/backend/enum.Event.html' title='sabiwm::backend::Event'>Event</a>&lt;Self::Window&gt;</code></span></h4>
+<div class='docblock'><p>Blocks until an event can be provided by the backend. Does not need to be asynchronous, because as long as there is no event, the window manager does not need to do anything. <a href="../../sabiwm/backend/trait.Backend.html#tymethod.event">Read more</a></p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "sabiwm";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

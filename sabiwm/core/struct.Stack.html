@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Stack` struct in crate `sabiwm`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Stack">
+
+    <title>sabiwm::core::Stack - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../index.html'>sabiwm</a>::<wbr><a href='index.html'>core</a></p><script>window.sidebarCurrent = {name: 'Stack', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>sabiwm</a>::<wbr><a href='index.html'>core</a>::<wbr><a class='struct' href=''>Stack</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-550' class='srclink' href='../../src/sabiwm/src/core/stack.rs.html#17-21' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Stack&lt;T&gt; {
+    pub focus: T,
+    pub up: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;T&gt;,
+    pub down: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;T&gt;,
+}</pre><div class='docblock'><p>Handles focus tracking on a workspace.
+<code>focus</code> keeps track of the focused window&#39;s id
+and <code>up</code> and <code>down</code> are the windows above or
+below the focus stack respectively.</p>
+
+<h1 id='immutable' class='section-header'><a href='#immutable'>Immutable</a></h1>
+<p>Note that this <a href="struct.Stack.html"><code>Stack</code></a> implementation is immutable
+and that each operation that would modify it, instead
+returns a new copy of the <a href="struct.Stack.html"><code>Stack</code></a> with the modified state.</p>
+</div><h2 class='fields'>Fields</h2><span id='structfield.focus' class='structfield'>
+                           <span id='focus.v' class='invisible'>
+                           <code>focus: T</code>
+                           </span></span><span class='stab '></span><span id='structfield.up' class='structfield'>
+                           <span id='up.v' class='invisible'>
+                           <code>up: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;T&gt;</code>
+                           </span></span><span class='stab '></span><span id='structfield.down' class='structfield'>
+                           <span id='down.v' class='invisible'>
+                           <code>down: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;T&gt;</code>
+                           </span></span><span class='stab '></span><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;T:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html' title='core::marker::Copy'>Copy</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.Eq.html' title='core::cmp::Eq'>Eq</a>&gt; <a class='struct' href='../../sabiwm/core/struct.Stack.html' title='sabiwm::core::Stack'>Stack</a>&lt;T&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-166' class='srclink' href='../../src/sabiwm/src/core/stack.rs.html#23-304' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class='method'><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>&lt;S:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html' title='core::iter::traits::IntoIterator'>IntoIterator</a>&lt;Item=T&gt;&gt;(f: T, up: S, down: S) -&gt; <a class='struct' href='../../sabiwm/core/struct.Stack.html' title='sabiwm::core::Stack'>Stack</a>&lt;T&gt;</code></span></h4>
+<div class='docblock'><p>Create a new stack with the given values</p>
+
+<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
+<pre class='rust rust-example-rendered'>
+<span class='kw'>let</span> <span class='ident'>stack</span> <span class='op'>=</span> <span class='ident'>Stack</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='ident'>Vec</span>::<span class='ident'>new</span>(), <span class='ident'>Vec</span>::<span class='ident'>new</span>());</pre>
+
+<h1 id='arguments' class='section-header'><a href='#arguments'>Arguments</a></h1>
+<p><code>f</code> - the focussed element to start with
+<code>up</code> - vector of all elements up the stack
+<code>down</code> - vector of all elements down the stack</p>
+
+<h1 id='return-value' class='section-header'><a href='#return-value'>Return value</a></h1>
+<p>A new <a href="struct.Stack.html"><code>Stack</code></a></p>
+</div><h4 id='method.add' class='method'><span id='add.v' class='invisible'><code>fn <a href='#method.add' class='fnname'>add</a>(&amp;self, t: T) -&gt; <a class='struct' href='../../sabiwm/core/struct.Stack.html' title='sabiwm::core::Stack'>Stack</a>&lt;T&gt;</code></span></h4>
+<div class='docblock'><p>Add a new element to the stack
+and automatically focus it.</p>
+
+<h1 id='examples-1' class='section-header'><a href='#examples-1'>Examples</a></h1>
+<pre class='rust rust-example-rendered'>
+<span class='kw'>let</span> <span class='ident'>stack</span> <span class='op'>=</span> <span class='ident'>Stack</span>::<span class='ident'>from</span>(<span class='number'>42</span>);
+<span class='kw'>let</span> <span class='ident'>new_stack</span> <span class='op'>=</span> <span class='ident'>stack</span>.<span class='ident'>add</span>(<span class='number'>23</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='number'>2</span>, <span class='ident'>new_stack</span>.<span class='ident'>len</span>());</pre>
+
+<h1 id='arguments-1' class='section-header'><a href='#arguments-1'>Arguments</a></h1>
+<p><code>t</code> - the new element to add</p>
+
+<h1 id='return-value-1' class='section-header'><a href='#return-value-1'>Return value</a></h1>
+<p>The new modified <a href="struct.Stack.html"><code>Stack</code></a></p>
+</div><h4 id='method.integrate' class='method'><span id='integrate.v' class='invisible'><code>fn <a href='#method.integrate' class='fnname'>integrate</a>&lt;C:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/iter/traits/trait.FromIterator.html' title='core::iter::traits::FromIterator'>FromIterator</a>&lt;T&gt;&gt;(&amp;self) -&gt; C</code></span></h4>
+<div class='docblock'><p>Flatten the stack into a new container</p>
+
+<h1 id='examples-2' class='section-header'><a href='#examples-2'>Examples</a></h1>
+<pre class='rust rust-example-rendered'>
+<span class='kw'>let</span> <span class='ident'>stack</span> <span class='op'>=</span> <span class='ident'>Stack</span>::<span class='ident'>new</span>(<span class='number'>1</span>, <span class='macro'>vec</span><span class='macro'>!</span>[<span class='number'>2</span>,<span class='number'>3</span>], <span class='macro'>vec</span><span class='macro'>!</span>[<span class='number'>4</span>,<span class='number'>5</span>]);
+<span class='kw'>let</span> <span class='ident'>v</span> <span class='op'>=</span> <span class='ident'>stack</span>.<span class='ident'>integrate</span>::<span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span>_<span class='op'>&gt;&gt;</span>();
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='macro'>vec</span><span class='macro'>!</span>[<span class='number'>3</span>,<span class='number'>2</span>,<span class='number'>1</span>,<span class='number'>4</span>,<span class='number'>5</span>], <span class='ident'>v</span>);</pre>
+
+<h1 id='return-value-2' class='section-header'><a href='#return-value-2'>Return value</a></h1>
+<p>A collection of a flattened <a href="struct.Stack.html"><code>Stack</code></a></p>
+</div><h4 id='method.filter' class='method'><span id='filter.v' class='invisible'><code>fn <a href='#method.filter' class='fnname'>filter</a>&lt;F&gt;(&amp;self, f: F) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../../sabiwm/core/struct.Stack.html' title='sabiwm::core::Stack'>Stack</a>&lt;T&gt;&gt; <span class='where'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(&amp;T) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></span></code></span></h4>
+<div class='docblock'><p>Filter the stack to retain only windows
+that yield true in the given filter function.</p>
+
+<h1 id='examples-3' class='section-header'><a href='#examples-3'>Examples</a></h1>
+<pre class='rust rust-example-rendered'>
+<span class='kw'>let</span> <span class='ident'>stack</span> <span class='op'>=</span> <span class='ident'>Stack</span>::<span class='ident'>new</span>(<span class='number'>1</span>, <span class='macro'>vec</span><span class='macro'>!</span>[<span class='number'>2</span>,<span class='number'>3</span>,<span class='number'>4</span>], <span class='macro'>vec</span><span class='macro'>!</span>[<span class='number'>5</span>,<span class='number'>6</span>,<span class='number'>7</span>]);
+<span class='kw'>let</span> <span class='ident'>even_stack</span> <span class='op'>=</span> <span class='ident'>stack</span>.<span class='ident'>filter</span>(<span class='op'>|</span><span class='ident'>x</span><span class='op'>|</span> <span class='ident'>x</span> <span class='op'>%</span> <span class='number'>2</span> <span class='op'>==</span> <span class='number'>0</span>).<span class='ident'>unwrap</span>();
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='macro'>vec</span><span class='macro'>!</span>[<span class='number'>4</span>,<span class='number'>2</span>,<span class='number'>6</span>], <span class='ident'>even_stack</span>.<span class='ident'>integrate</span>::<span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span>_<span class='op'>&gt;&gt;</span>());</pre>
+
+<h1 id='arguments-2' class='section-header'><a href='#arguments-2'>Arguments</a></h1>
+<p><code>f</code> - the filter function to use for filtering</p>
+
+<h1 id='return-value-3' class='section-header'><a href='#return-value-3'>Return value</a></h1>
+<p>Returns <code>Some(Stack)</code> if there are still items left after filtering
+or <code>None</code> if there is no element left after filtering.</p>
+</div><h4 id='method.focus_up' class='method'><span id='focus_up.v' class='invisible'><code>fn <a href='#method.focus_up' class='fnname'>focus_up</a>(&amp;self) -&gt; <a class='struct' href='../../sabiwm/core/struct.Stack.html' title='sabiwm::core::Stack'>Stack</a>&lt;T&gt;</code></span></h4>
+<div class='docblock'><p>Move the focus to the next element in the <code>up</code> list</p>
+</div><h4 id='method.focus_down' class='method'><span id='focus_down.v' class='invisible'><code>fn <a href='#method.focus_down' class='fnname'>focus_down</a>(&amp;self) -&gt; <a class='struct' href='../../sabiwm/core/struct.Stack.html' title='sabiwm::core::Stack'>Stack</a>&lt;T&gt;</code></span></h4>
+<div class='docblock'><p>Move the focus down</p>
+</div><h4 id='method.swap_up' class='method'><span id='swap_up.v' class='invisible'><code>fn <a href='#method.swap_up' class='fnname'>swap_up</a>(&amp;self) -&gt; <a class='struct' href='../../sabiwm/core/struct.Stack.html' title='sabiwm::core::Stack'>Stack</a>&lt;T&gt;</code></span></h4>
+<h4 id='method.swap_down' class='method'><span id='swap_down.v' class='invisible'><code>fn <a href='#method.swap_down' class='fnname'>swap_down</a>(&amp;self) -&gt; <a class='struct' href='../../sabiwm/core/struct.Stack.html' title='sabiwm::core::Stack'>Stack</a>&lt;T&gt;</code></span></h4>
+<h4 id='method.swap_master' class='method'><span id='swap_master.v' class='invisible'><code>fn <a href='#method.swap_master' class='fnname'>swap_master</a>(&amp;self) -&gt; <a class='struct' href='../../sabiwm/core/struct.Stack.html' title='sabiwm::core::Stack'>Stack</a>&lt;T&gt;</code></span></h4>
+<h4 id='method.reverse' class='method'><span id='reverse.v' class='invisible'><code>fn <a href='#method.reverse' class='fnname'>reverse</a>(&amp;self) -&gt; <a class='struct' href='../../sabiwm/core/struct.Stack.html' title='sabiwm::core::Stack'>Stack</a>&lt;T&gt;</code></span></h4>
+<div class='docblock'><p>Reverse the stack by exchanging
+the <code>up</code> and <code>down</code> lists</p>
+</div><h4 id='method.len' class='method'><span id='len.v' class='invisible'><code>fn <a href='#method.len' class='fnname'>len</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a></code></span></h4>
+<div class='docblock'><p>Return the number of elements tracked by the stack</p>
+</div><h4 id='method.is_empty' class='method'><span id='is_empty.v' class='invisible'><code>fn <a href='#method.is_empty' class='fnname'>is_empty</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+<div class='docblock'><p>Checks if the <a href="struct.Stack.html"><code>Stack</code></a> is empty</p>
+
+<h1 id='examples-4' class='section-header'><a href='#examples-4'>Examples</a></h1>
+<pre class='rust rust-example-rendered'>
+<span class='kw'>let</span> <span class='ident'>stack</span> <span class='op'>=</span> <span class='ident'>Stack</span>::<span class='ident'>from</span>(<span class='number'>42</span>);
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='bool-val'>false</span>, <span class='ident'>stack</span>.<span class='ident'>is_empty</span>());</pre>
+
+<h1 id='return-value-4' class='section-header'><a href='#return-value-4'>Return value</a></h1>
+<p><code>true</code> if the <a href="struct.Stack.html"><code>Stack</code></a> is empty, <code>false</code> otherwise</p>
+</div><h4 id='method.contains' class='method'><span id='contains.v' class='invisible'><code>fn <a href='#method.contains' class='fnname'>contains</a>(&amp;self, t: T) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+<div class='docblock'><p>Checks if the given window is tracked by the stack</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>let</span> <span class='ident'>stack</span> <span class='op'>=</span> <span class='ident'>Stack</span>::<span class='ident'>from</span>(<span class='number'>42</span>);
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='bool-val'>true</span>, <span class='ident'>stack</span>.<span class='ident'>contains</span>(<span class='number'>42</span>));
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='bool-val'>false</span>, <span class='ident'>stack</span>.<span class='ident'>contains</span>(<span class='number'>23</span>));</pre>
+
+<h1 id='arguments-3' class='section-header'><a href='#arguments-3'>Arguments</a></h1>
+<p><code>t</code> - the element to search for</p>
+
+<h1 id='return-value-5' class='section-header'><a href='#return-value-5'>Return value</a></h1>
+<p><code>true</code> if the <a href="struct.Stack.html"><code>Stack</code></a> contains the given element</p>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;T:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a>&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='struct' href='../../sabiwm/core/struct.Stack.html' title='sabiwm::core::Stack'>Stack</a>&lt;T&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-555' class='srclink' href='../../src/sabiwm/src/core/stack.rs.html#16' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.clone' class='method'><span id='clone.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='struct' href='../../sabiwm/core/struct.Stack.html' title='sabiwm::core::Stack'>Stack</a>&lt;T&gt;</code></span></h4>
+<div class='docblock'><p>Returns a copy of the value. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">Read more</a></p>
+</div><h4 id='method.clone_from' class='method'><span id='clone_from.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
+<div class='docblock'><p>Performs copy-assignment from <code>source</code>. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from">Read more</a></p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;T:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a>&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../../sabiwm/core/struct.Stack.html' title='sabiwm::core::Stack'>Stack</a>&lt;T&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-562' class='srclink' href='../../src/sabiwm/src/core/stack.rs.html#16' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class='method'><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></span></h4>
+<div class='docblock'><p>Formats the value using the given formatter.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;T:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a>&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> for <a class='struct' href='../../sabiwm/core/struct.Stack.html' title='sabiwm::core::Stack'>Stack</a>&lt;T&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-571' class='srclink' href='../../src/sabiwm/src/core/stack.rs.html#16' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.eq' class='method'><span id='eq.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq' class='fnname'>eq</a>(&amp;self, __arg_0: &amp;<a class='struct' href='../../sabiwm/core/struct.Stack.html' title='sabiwm::core::Stack'>Stack</a>&lt;T&gt;) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+<div class='docblock'><p>This method tests for <code>self</code> and <code>other</code> values to be equal, and is used by <code>==</code>. <a href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq">Read more</a></p>
+</div><h4 id='method.ne' class='method'><span id='ne.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.ne' class='fnname'>ne</a>(&amp;self, __arg_0: &amp;<a class='struct' href='../../sabiwm/core/struct.Stack.html' title='sabiwm::core::Stack'>Stack</a>&lt;T&gt;) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+<div class='docblock'><p>This method tests for <code>!=</code>.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;T:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.Eq.html' title='core::cmp::Eq'>Eq</a>&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.Eq.html' title='core::cmp::Eq'>Eq</a> for <a class='struct' href='../../sabiwm/core/struct.Stack.html' title='sabiwm::core::Stack'>Stack</a>&lt;T&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-591' class='srclink' href='../../src/sabiwm/src/core/stack.rs.html#16' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'></div><h3 class='impl'><span class='in-band'><code>impl&lt;T:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a>&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;T&gt; for <a class='struct' href='../../sabiwm/core/struct.Stack.html' title='sabiwm::core::Stack'>Stack</a>&lt;T&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-227' class='srclink' href='../../src/sabiwm/src/core/stack.rs.html#306-317' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.from' class='method'><span id='from.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#tymethod.from' class='fnname'>from</a>(t: T) -&gt; <a class='struct' href='../../sabiwm/core/struct.Stack.html' title='sabiwm::core::Stack'>Stack</a>&lt;T&gt;</code></span></h4>
+<div class='docblock'><p>Create a new stack with only the given element
+as the focused one and initialize the rest to empty.</p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "sabiwm";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

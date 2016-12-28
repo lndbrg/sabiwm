@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Workspace` struct in crate `sabiwm`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Workspace">
+
+    <title>sabiwm::core::Workspace - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../index.html'>sabiwm</a>::<wbr><a href='index.html'>core</a></p><script>window.sidebarCurrent = {name: 'Workspace', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>sabiwm</a>::<wbr><a href='index.html'>core</a>::<wbr><a class='struct' href=''>Workspace</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-234' class='srclink' href='../../src/sabiwm/src/core/workspace.rs.html#20-24' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Workspace&lt;Window&gt; {
+    pub id: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>,
+    pub tag: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>,
+    pub stack: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../../sabiwm/core/struct.Stack.html' title='sabiwm::core::Stack'>Stack</a>&lt;Window&gt;&gt;,
+}</pre><div class='docblock'><p>Represents a single workspace with a <code>tag</code> (name),
+<code>id</code>, a <code>layout</code> and a <code>stack</code> for all windows.
+A workspace is in charge of all windows belonging
+to that workspace. At each time, a single screen
+holds one workspace, while all the other
+workspaces are hidden in the background, while
+still being managed.</p>
+
+<h1 id='immutable' class='section-header'><a href='#immutable'>Immutable</a></h1>
+<p>Note that this <a href="struct.Stack.html"><code>Workspace</code></a> implementation is immutable
+and that each operation that would modify it, instead
+returns a new copy of the <a href="struct.Stack.html"><code>Workspace</code></a> with the modified state.</p>
+</div><h2 class='fields'>Fields</h2><span id='structfield.id' class='structfield'>
+                           <span id='id.v' class='invisible'>
+                           <code>id: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a></code>
+                           </span></span><span class='stab '></span><span id='structfield.tag' class='structfield'>
+                           <span id='tag.v' class='invisible'>
+                           <code>tag: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a></code>
+                           </span></span><span class='stab '></span><span id='structfield.stack' class='structfield'>
+                           <span id='stack.v' class='invisible'>
+                           <code>stack: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../../sabiwm/core/struct.Stack.html' title='sabiwm::core::Stack'>Stack</a>&lt;Window&gt;&gt;</code>
+                           </span></span><span class='stab '></span><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;Window:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html' title='core::marker::Copy'>Copy</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.Eq.html' title='core::cmp::Eq'>Eq</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a>&gt; <a class='struct' href='../../sabiwm/core/struct.Workspace.html' title='sabiwm::core::Workspace'>Workspace</a>&lt;Window&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-243' class='srclink' href='../../src/sabiwm/src/core/workspace.rs.html#36-133' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class='method'><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>&lt;S:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;&gt;(id: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tag: S,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stack: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../../sabiwm/core/struct.Stack.html' title='sabiwm::core::Stack'>Stack</a>&lt;Window&gt;&gt;)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class='struct' href='../../sabiwm/core/struct.Workspace.html' title='sabiwm::core::Workspace'>Workspace</a>&lt;Window&gt;</code></span></h4>
+<div class='docblock'><p>Create a new workspace</p>
+
+<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
+<pre class='rust rust-example-rendered'>
+<span class='kw'>let</span> <span class='ident'>stack</span> <span class='op'>=</span> <span class='ident'>Stack</span>::<span class='ident'>from</span>(<span class='number'>42u32</span>);
+<span class='kw'>let</span> <span class='ident'>workspace</span> <span class='op'>=</span> <span class='ident'>Workspace</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='string'>&quot;Desktop 0&quot;</span>, <span class='prelude-val'>Some</span>(<span class='ident'>stack</span>));
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='number'>1</span>, <span class='ident'>workspace</span>.<span class='ident'>len</span>());</pre>
+</div><h4 id='method.add' class='method'><span id='add.v' class='invisible'><code>fn <a href='#method.add' class='fnname'>add</a>(&amp;self, window: Window) -&gt; <a class='struct' href='../../sabiwm/core/struct.Workspace.html' title='sabiwm::core::Workspace'>Workspace</a>&lt;Window&gt;</code></span></h4>
+<div class='docblock'><p>Add a new window to the workspace by adding it to the stack.
+If the stack doesn&#39;t exist yet, create one.</p>
+
+<h1 id='examples-1' class='section-header'><a href='#examples-1'>Examples</a></h1>
+<pre class='rust rust-example-rendered'>
+<span class='kw'>let</span> <span class='ident'>workspace</span> : <span class='ident'>Workspace</span><span class='op'>&lt;</span><span class='ident'>u32</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>Workspace</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='string'>&quot;Desktop 0&quot;</span>, <span class='prelude-val'>None</span>);
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='number'>0</span>, <span class='ident'>workspace</span>.<span class='ident'>len</span>());</pre>
+</div><h4 id='method.remove' class='method'><span id='remove.v' class='invisible'><code>fn <a href='#method.remove' class='fnname'>remove</a>(&amp;self, window: Window) -&gt; <a class='struct' href='../../sabiwm/core/struct.Workspace.html' title='sabiwm::core::Workspace'>Workspace</a>&lt;Window&gt;</code></span></h4>
+<h4 id='method.len' class='method'><span id='len.v' class='invisible'><code>fn <a href='#method.len' class='fnname'>len</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a></code></span></h4>
+<div class='docblock'><p>Returns the number of windows contained in this workspace</p>
+</div><h4 id='method.is_empty' class='method'><span id='is_empty.v' class='invisible'><code>fn <a href='#method.is_empty' class='fnname'>is_empty</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+<h4 id='method.contains' class='method'><span id='contains.v' class='invisible'><code>fn <a href='#method.contains' class='fnname'>contains</a>(&amp;self, window: Window) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+<div class='docblock'><p>Checks if the workspace contains the given window</p>
+</div><h4 id='method.windows' class='method'><span id='windows.v' class='invisible'><code>fn <a href='#method.windows' class='fnname'>windows</a>(&amp;self) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;Window&gt;</code></span></h4>
+<h4 id='method.peek' class='method'><span id='peek.v' class='invisible'><code>fn <a href='#method.peek' class='fnname'>peek</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;Window&gt;</code></span></h4>
+<h4 id='method.map' class='method'><span id='map.v' class='invisible'><code>fn <a href='#method.map' class='fnname'>map</a>&lt;F&gt;(&amp;self, f: F) -&gt; <a class='struct' href='../../sabiwm/core/struct.Workspace.html' title='sabiwm::core::Workspace'>Workspace</a>&lt;Window&gt; <span class='where'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(<a class='struct' href='../../sabiwm/core/struct.Stack.html' title='sabiwm::core::Stack'>Stack</a>&lt;Window&gt;) -&gt; <a class='struct' href='../../sabiwm/core/struct.Stack.html' title='sabiwm::core::Stack'>Stack</a>&lt;Window&gt;</span></code></span></h4>
+<h4 id='method.map_option' class='method'><span id='map_option.v' class='invisible'><code>fn <a href='#method.map_option' class='fnname'>map_option</a>&lt;F&gt;(&amp;self, f: F) -&gt; <a class='struct' href='../../sabiwm/core/struct.Workspace.html' title='sabiwm::core::Workspace'>Workspace</a>&lt;Window&gt; <span class='where'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(<a class='struct' href='../../sabiwm/core/struct.Stack.html' title='sabiwm::core::Stack'>Stack</a>&lt;Window&gt;) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../../sabiwm/core/struct.Stack.html' title='sabiwm::core::Stack'>Stack</a>&lt;Window&gt;&gt;</span></code></span></h4>
+<h4 id='method.map_or' class='method'><span id='map_or.v' class='invisible'><code>fn <a href='#method.map_or' class='fnname'>map_or</a>&lt;F&gt;(&amp;self, default: <a class='struct' href='../../sabiwm/core/struct.Stack.html' title='sabiwm::core::Stack'>Stack</a>&lt;Window&gt;, f: F) -&gt; <a class='struct' href='../../sabiwm/core/struct.Workspace.html' title='sabiwm::core::Workspace'>Workspace</a>&lt;Window&gt; <span class='where'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(<a class='struct' href='../../sabiwm/core/struct.Stack.html' title='sabiwm::core::Stack'>Stack</a>&lt;Window&gt;) -&gt; <a class='struct' href='../../sabiwm/core/struct.Stack.html' title='sabiwm::core::Stack'>Stack</a>&lt;Window&gt;</span></code></span></h4>
+</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;Window:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a>&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='struct' href='../../sabiwm/core/struct.Workspace.html' title='sabiwm::core::Workspace'>Workspace</a>&lt;Window&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-239' class='srclink' href='../../src/sabiwm/src/core/workspace.rs.html#26-34' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.clone' class='method'><span id='clone.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='struct' href='../../sabiwm/core/struct.Workspace.html' title='sabiwm::core::Workspace'>Workspace</a>&lt;Window&gt;</code></span></h4>
+<div class='docblock'><p>Returns a copy of the value. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">Read more</a></p>
+</div><h4 id='method.clone_from' class='method'><span id='clone_from.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
+<div class='docblock'><p>Performs copy-assignment from <code>source</code>. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from">Read more</a></p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "sabiwm";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

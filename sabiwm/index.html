@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `sabiwm` crate.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, sabiwm">
+
+    <title>sabiwm - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'></p><script>window.sidebarCurrent = {name: 'sabiwm', ty: 'mod', relpath: '../'};</script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content mod">
+<h1 class='fqn'><span class='in-band'>Crate <a class='mod' href=''>sabiwm</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-0' class='srclink' href='../src/sabiwm/src/lib.rs.html#1-108' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'>
+<h1 id='sabiwm---錆wm-rust-wm' class='section-header'><a href='#sabiwm---錆wm-rust-wm'>SabiWM - 錆WM (Rust WM)</a></h1>
+<p>SabiWM is a window manager written entirely in safe Rust.
+It aims to be a reliable, highly customizable tiling window manager
+in the spirit of XMonad, I3, bspwm and the like.</p>
+
+<h2 id='sabiwm-lib' class='section-header'><a href='#sabiwm-lib'>SabiWM Lib</a></h2>
+<p>The core part of SabiWM is its library. It serves as a
+learning basis for people who want to write their own window manager
+or as an easy place to customize it.</p>
+
+<p>The library itself is split into several parts, shortly explained below:</p>
+
+<h3 id='core' class='section-header'><a href='#core'>Core</a></h3>
+<p>The <a href="core/index.html"><code>Core</code></a> module</p>
+
+<p>The core module contains all the necessary data structures to handle the internal
+state to tile windows, manage focus, screens, workspaces, etc.</p>
+
+<h3 id='backend' class='section-header'><a href='#backend'>Backend</a></h3>
+<p>The backend module contains the general backend trait to abstract
+away from all the different backends, e.g. XCB, Wayland, Redox and all the others out there.</p>
+
+<h3 id='config' class='section-header'><a href='#config'>Config</a></h3>
+<p>The config module will contain several ways to configure the WM. All of them shall
+be interchangeable. The first and easiest way is a simple TOML file and on top of that
+a ctl daemon, a LUA interface and direct IPC.</p>
+</div><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='mod' href='backend/index.html'
+                                  title='sabiwm::backend'>backend</a></td>
+                           <td class='docblock-short'>
+                                <p>The backend module contains everything
+related to windowing operations, e.g.
+talk to Xlib, xcb or Wayland.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='mod' href='core/index.html'
+                                  title='sabiwm::core'>core</a></td>
+                           <td class='docblock-short'>
+                                <p>The core module contains all common data structures
+used throughout the system to manage the window manager&#39;s
+internal state. Basically, everything that is independent
+of configs or the actual windowing itself.</p>
+                           </td>
+                       </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.initialize_logger.html'
+                                  title='sabiwm::initialize_logger'>initialize_logger</a></td>
+                           <td class='docblock-short'>
+                                <p>Initialize the logger</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.run.html'
+                                  title='sabiwm::run'>run</a></td>
+                           <td class='docblock-short'>
+                                <p>Run the actual window manager</p>
+                           </td>
+                       </tr></table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "sabiwm";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>
