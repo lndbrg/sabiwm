@@ -34,5 +34,5 @@ pub enum Event<Window> {
     /// A key has been pressed
     KeyPressed(Window),
     /// An unknown or not important event
-    UnknownEvent,
+    Unknown,
 }

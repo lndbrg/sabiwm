@@ -80,6 +80,10 @@ impl<Window: Copy + Clone + PartialEq + Eq + Debug> Workspace<Window> {
         self.stack.clone().map_or(0, |x| x.len())
     }
 
+    pub fn is_empty(&self) -> bool {
+        self.len() == 0
+    }
+
     /// Checks if the workspace contains the given window
     pub fn contains(&self, window: Window) -> bool {
         trace!("workspace_tag" => self.tag, "workspace_id" => self.id; "checking if workspace contains window {:?}", window);
@@ -98,7 +102,7 @@ impl<Window: Copy + Clone + PartialEq + Eq + Debug> Workspace<Window> {
         where F: Fn(Stack<Window>) -> Stack<Window>
     {
         trace!("workspace_tag" => self.tag, "workspace_id" => self.id; "mapping over workspace");
-        Workspace::new(self.id, self.tag.clone(), self.stack.clone().map(|x| f(x)))
+        Workspace::new(self.id, self.tag.clone(), self.stack.clone().map(f))
     }
 
     pub fn map_option<F>(&self, f: F) -> Workspace<Window>
@@ -107,7 +111,7 @@ impl<Window: Copy + Clone + PartialEq + Eq + Debug> Workspace<Window> {
         trace!("workspace_tag" => self.tag, "workspace_id" => self.id; "mapping optional over workspace");
         Workspace::new(self.id,
                        self.tag.clone(),
-                       self.stack.clone().map_or(None, |x| f(x)))
+                       self.stack.clone().map_or(None, f))
     }
 
     pub fn map_or<F>(&self, default: Stack<Window>, f: F) -> Workspace<Window>
@@ -116,6 +120,6 @@ impl<Window: Copy + Clone + PartialEq + Eq + Debug> Workspace<Window> {
         trace!("workspace_tag" => self.tag, "workspace_id" => self.id; "mapping default over workspace");
         Workspace::new(self.id,
                        self.tag.clone(),
-                       Some(self.stack.clone().map_or(default, |x| f(x))))
+                       Some(self.stack.clone().map_or(default, f)))
     }
 }

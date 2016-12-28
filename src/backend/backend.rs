@@ -2,6 +2,7 @@ use backend::Event;
 use core::Rectangle;
 use errors::*;
 
+/// A general trait for all backends (X11, XCB, Wayland)
 pub trait Backend {
     type Window;
 
@@ -77,7 +78,7 @@ pub trait Backend {
     /// A vector of all [`Window`] IDs
     ///
     /// [`Window`]: trait.Backend.html#associatedtype.Window
-    fn windows(&self) -> Vec<Self::Window>;
+    fn windows(&self) -> Result<Vec<Self::Window>>;
     /// Tells the backend to resize the given [`Window`] to the
     /// given `width` and `height`.
     ///
