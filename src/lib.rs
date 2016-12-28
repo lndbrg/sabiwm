@@ -1,3 +1,38 @@
+//! # SabiWM - 錆WM (Rust WM)
+//!
+//! SabiWM is a window manager written entirely in safe Rust.
+//! It aims to be a reliable, highly customizable tiling window manager
+//! in the spirit of XMonad, I3, bspwm and the like.
+//!
+//! ## SabiWM Lib
+//!
+//! The core part of SabiWM is its library. It serves as a
+//! learning basis for people who want to write their own window manager
+//! or as an easy place to customize it.
+//!
+//! The library itself is split into several parts, shortly explained below:
+//!
+//! ### Core
+//!
+//! The [`Core`] module
+//!
+//! The core module contains all the necessary data structures to handle the internal
+//! state to tile windows, manage focus, screens, workspaces, etc.
+//!
+//! ### Backend
+//!
+//! The backend module contains the general backend trait to abstract
+//! away from all the different backends, e.g. XCB, Wayland, Redox and all the others out there.
+//!
+//! ### Config
+//!
+//! The config module will contain several ways to configure the WM. All of them shall
+//! be interchangeable. The first and easiest way is a simple TOML file and on top of that
+//! a ctl daemon, a LUA interface and direct IPC.
+//!
+//! [`Core`]: core/index.html
+//! ['Backend']: backend/index.html
+
 #[macro_use(o, slog_log, slog_debug, slog_trace, slog_warn, slog_error, slog_info)]
 extern crate slog;
 extern crate slog_json;
