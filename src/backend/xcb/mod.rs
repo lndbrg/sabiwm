@@ -88,7 +88,7 @@ impl Backend for Xcb {
     }
 
     fn number_of_screens(&self) -> usize {
-        self.connection.get_setup().roots().fold(0, |acc, _| acc + 1)
+        self.connection.get_setup().roots_len() as usize
     }
 
     fn window_name(&self, window: Self::Window) -> String {
