@@ -91,9 +91,20 @@ impl Backend for Xcb {
         self.connection.get_setup().roots().fold(0, |acc, _| acc + 1)
     }
 
-    fn window_name(&self, window: Self::Window) -> String {
+    fn window_name(&self, window: Self::Window) -> Option<String> {
         trace!("retrieving name of window {:?}", window);
-        unimplemented!();
+        //TODO: use EWMH _NET_WM_NAME instead?
+        match xcb::get_property(&self.connection,
+                                false,
+                                window,
+                                xcb::ATOM_WM_NAME,
+                                xcb::ATOM_STRING,
+                                0,
+                                u32::max_value())
+            .get_reply() {
+                Ok(reply) => Some(String::from_utf8(reply.value().to_vec()).unwrap()),
+                Err(_) => None
+        }
     }
 
     fn class_name(&self, window: Self::Window) -> String {
