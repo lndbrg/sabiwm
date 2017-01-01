@@ -4,9 +4,11 @@
 //! of configs or the actual windowing itself.
 
 mod rectangle;
+mod screen;
 mod stack;
 mod workspace;
 
 pub use core::rectangle::Rectangle;
+pub use core::screen::Screen;
 pub use core::stack::Stack;
 pub use core::workspace::Workspace;
