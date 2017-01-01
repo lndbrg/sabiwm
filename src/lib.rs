@@ -33,6 +33,8 @@
 //! [`Core`]: core/index.html
 //! ['Backend']: backend/index.html
 
+#![deny(missing_docs)]
+
 #[macro_use(o, slog_log, slog_debug, slog_trace, slog_warn, slog_error, slog_info)]
 extern crate slog;
 extern crate slog_json;
