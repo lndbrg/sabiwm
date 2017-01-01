@@ -9,7 +9,11 @@ use std::fmt::Debug;
 /// A screen is represented by the workspace it manages
 /// and an ID for the screen it is being shown on.
 pub struct Screen<Window> {
+    /// The [`Workspace`] this [`Screen`] is handling
+    /// [`Workspace`]: struct.Workspace.html
+    /// [`Screen`]: struct.Screen.html
     pub workspace: Workspace<Window>,
+    /// The [`Screen`]'s global identifier
     pub screen_id: u32,
 }
 

@@ -59,6 +59,15 @@ impl Rectangle {
         horizontal && vertical
     }
 
+    /// Checks if the [`Rectangle`] overlaps with the given [`Rectangle`],
+    /// i.e. if one of the points is within the given [`Rectangle`].
+    ///
+    /// # Arguments
+    /// `other` - The other [`Rectangle`] to check overlap with
+    ///
+    /// # Return value
+    /// `true` if both [`Rectangle`]s overlap. `false` otherwise
+    /// [`Rectangle`]: struct.Rectangle.html
     pub fn overlaps(&self, other: &Rectangle) -> bool {
         !(other.x >= self.right() || other.right() <= self.x || other.y >= self.bottom() ||
           other.bottom() <= self.y)

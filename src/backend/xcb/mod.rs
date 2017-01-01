@@ -3,6 +3,8 @@ use core::Rectangle;
 use errors::*;
 use xcb;
 
+/// The Xcb backend. This backend shall be the default,
+/// until Wayland becomes the default environment.
 pub struct Xcb {
     connection: xcb::Connection,
     root: xcb::ffi::xproto::xcb_window_t,

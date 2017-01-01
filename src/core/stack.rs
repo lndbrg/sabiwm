@@ -15,8 +15,11 @@ use std::fmt::Debug;
 /// [`Stack`]: struct.Stack.html
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Stack<T> {
+    ///
     pub focus: T,
+    ///
     pub up: Vec<T>,
+    ///
     pub down: Vec<T>,
 }
 
@@ -202,6 +205,7 @@ impl<T: Debug + Copy + Clone + Eq> Stack<T> {
         self.reverse().focus_up().reverse()
     }
 
+    /// [`Stack`]: struct.Stack.html
     pub fn swap_up(&self) -> Stack<T> {
         trace!("swapping up in stack");
         if self.up.is_empty() {
@@ -216,11 +220,13 @@ impl<T: Debug + Copy + Clone + Eq> Stack<T> {
         }
     }
 
+    /// [`Stack`]: struct.Stack.html
     pub fn swap_down(&self) -> Stack<T> {
         trace!("swapping down in stack. reversing, swapping up, reversing back");
         self.reverse().swap_up().reverse()
     }
 
+    /// [`Stack`]: struct.Stack.html
     pub fn swap_master(&self) -> Stack<T> {
         trace!("swapping stack to master");
         if self.up.is_empty() {

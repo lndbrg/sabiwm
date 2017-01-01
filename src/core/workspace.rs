@@ -18,8 +18,11 @@ use std::fmt::Debug;
 ///
 /// [`Workspace`]: struct.Stack.html
 pub struct Workspace<Window> {
+    ///
     pub id: u32,
+    ///
     pub tag: String,
+    ///
     pub stack: Option<Stack<Window>>,
 }
 
@@ -76,6 +79,15 @@ impl<Window: Copy + Clone + PartialEq + Eq + Debug> Workspace<Window> {
                            .map_or(Stack::from(window), |s| s.add(window))))
     }
 
+    /// Remove the given window from the workspace.
+    ///
+    /// # Arguments
+    /// `window` - The window to remove
+    ///
+    /// # Return value
+    /// A new [`Workspace`] without the window
+    ///
+    /// [`Workspace`]: struct.Workspace.html
     pub fn remove(&self, window: Window) -> Workspace<Window> {
         trace!("workspace_tag" => self.tag, "workspace_id" => self.id; "removing window {:?} from workspace", window);
         Workspace::new(self.id,
@@ -83,29 +95,43 @@ impl<Window: Copy + Clone + PartialEq + Eq + Debug> Workspace<Window> {
                        self.stack.clone().map_or(None, |s| s.filter(|&w| w != window)))
     }
 
-    /// Returns the number of windows contained in this workspace
+    /// Returns the number of windows contained in this [`Workspace`]
+    ///
+    /// # Return value
+    /// Number of windows in this [`Workspace`]
+    /// [`Workspace`]: struct.Workspace.html
     pub fn len(&self) -> usize {
         self.stack.clone().map_or(0, |x| x.len())
     }
 
+    /// Checks if the [`Workspace`] is empty, i.e. if it is not
+    /// managing any windows.
+    ///
+    /// # Return value
+    /// `true` if the [`Workspace`] is empty
+    /// [`Workspace`]: struct.Workspace.html
     pub fn is_empty(&self) -> bool {
         self.len() == 0
     }
 
     /// Checks if the workspace contains the given window
+    /// [`Workspace`]: struct.Workspace.html
     pub fn contains(&self, window: Window) -> bool {
         trace!("workspace_tag" => self.tag, "workspace_id" => self.id; "checking if workspace contains window {:?}", window);
         self.stack.clone().map_or(false, |x| x.contains(window))
     }
 
+    /// [`Workspace`]: struct.Workspace.html
     pub fn windows(&self) -> Vec<Window> {
         self.stack.clone().map_or(Vec::new(), |s| s.integrate())
     }
 
+    /// [`Workspace`]: struct.Workspace.html
     pub fn peek(&self) -> Option<Window> {
         self.stack.clone().map(|s| s.focus)
     }
 
+    /// [`Workspace`]: struct.Workspace.html
     pub fn map<F>(&self, f: F) -> Workspace<Window>
         where F: Fn(Stack<Window>) -> Stack<Window>
     {
@@ -113,6 +139,7 @@ impl<Window: Copy + Clone + PartialEq + Eq + Debug> Workspace<Window> {
         Workspace::new(self.id, self.tag.clone(), self.stack.clone().map(f))
     }
 
+    /// [`Workspace`]: struct.Workspace.html
     pub fn map_option<F>(&self, f: F) -> Workspace<Window>
         where F: Fn(Stack<Window>) -> Option<Stack<Window>>
     {
@@ -122,6 +149,7 @@ impl<Window: Copy + Clone + PartialEq + Eq + Debug> Workspace<Window> {
                        self.stack.clone().map_or(None, f))
     }
 
+    /// [`Workspace`]: struct.Workspace.html
     pub fn map_or<F>(&self, default: Stack<Window>, f: F) -> Workspace<Window>
         where F: Fn(Stack<Window>) -> Stack<Window>
     {

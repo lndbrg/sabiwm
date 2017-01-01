@@ -19,6 +19,11 @@ use errors::*;
 ///
 ///
 pub trait Backend {
+    /// The window type to support in this [`Backend`].
+    /// For example, in Xlib/xcb it would be u32.
+    ///
+    /// It can be any type that fullfills the requirements.
+    /// [`Backend`]: trait.Backend.html
     type Window;
 
     /// Create a new instance of the Backend.
@@ -41,6 +46,19 @@ pub trait Backend {
     ///
     /// [`Window`]: trait.Backend.html#associatedtype.Window
     fn is_dock(&self, window: Self::Window) -> bool;
+    /// Determines if the given window is a real window. Real here means
+    /// if it needs its own space in the layout or if it is something
+    /// like a popmenu, hint, etc.
+    ///
+    /// These windows have special requirements.
+    ///
+    /// # Arguments
+    /// `window` = the [`Window`] ID
+    ///
+    /// # Return value
+    ///
+    /// `true` if the given [`Window`] is a real window
+    /// [`Window`]: trait.Backend.html#associatedtype.Window
     fn is_window(&self, window: Self::Window) -> bool;
     /// Returns a vector of all screens currently handled by the
     /// window manager.
