@@ -102,7 +102,7 @@ pub trait Backend {
     /// A string representing the [`Window`]'s class
     ///
     /// [`Window`]: trait.Backend.html#associatedtype.Window
-    fn class_name(&self, window: Self::Window) -> String;
+    fn class_name(&self, window: Self::Window) -> Result<String>;
     /// Returns a vector of all [`Window`] IDs currently handled
     /// by the window manager's backend.
     ///

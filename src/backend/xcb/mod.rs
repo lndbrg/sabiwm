@@ -52,7 +52,7 @@ impl Xcb {
         screen.root()
     }
 
-    fn get_window_name(&self, atom: xcb::Atom, window: xcb::Window) -> Result<String> {
+    fn get_string_atom(&self, atom: xcb::Atom, window: xcb::Window) -> Result<String> {
         let reply = xcb::get_property(&self.connection,
                                       false,
                                       window,
@@ -114,13 +114,13 @@ impl Backend for Xcb {
         // If that fails, fall back to WM_NAME.
         let reply = xcb::intern_atom(&self.connection, false, "_NET_WM_NAME").get_reply()
             .map_err(|err| format!("{:?}", err))?;
-        self.get_window_name(reply.atom(), window)
-            .or_else(|_| self.get_window_name(xcb::ATOM_WM_NAME, window))
+        self.get_string_atom(reply.atom(), window)
+            .or_else(|_| self.get_string_atom(xcb::ATOM_WM_NAME, window))
     }
 
-    fn class_name(&self, window: Self::Window) -> String {
+    fn class_name(&self, window: Self::Window) -> Result<String> {
         trace!("retrieving class name of window {:?}", window);
-        unimplemented!();
+        self.get_string_atom(xcb::ATOM_WM_CLASS, window)
     }
 
     fn windows(&self) -> Result<Vec<Self::Window>> {
