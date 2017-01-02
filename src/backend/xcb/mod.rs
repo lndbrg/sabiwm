@@ -52,22 +52,19 @@ impl Xcb {
         screen.root()
     }
 
-    fn get_window_name(&self, atom: xcb::Atom, window: xcb::Window) -> Option<String> {
-
-        xcb::get_property(&self.connection,
-                          false,
-                          window,
-                          atom,
-                          xcb::ATOM_STRING,
-                          0,
-                          u32::max_value())
-            .get_reply()
-            .ok()
-            .and_then(|reply| if reply.value_len() > 0 {
-                Some(String::from_utf8(reply.value().to_vec()).unwrap())
-            } else {
-                None
-            })
+    fn get_window_name(&self, atom: xcb::Atom, window: xcb::Window) -> Result<String> {
+        let reply = xcb::get_property(&self.connection,
+                                      false,
+                                      window,
+                                      atom,
+                                      xcb::ATOM_STRING,
+                                      0,
+                                      u32::max_value()).get_reply()
+            .map_err(|err| format!("{:?}", err))?;
+        match String::from_utf8(reply.value().to_vec()) {
+            Ok(ref name) if name.len() > 0 => Ok(name.clone()),
+            _ => bail!("unable to get window name"),
+        }
     }
 }
 
@@ -111,16 +108,14 @@ impl Backend for Xcb {
         self.connection.get_setup().roots_len() as usize
     }
 
-    fn window_name(&self, window: Self::Window) -> Option<String> {
+    fn window_name(&self, window: Self::Window) -> Result<String> {
         trace!("retrieving name of window {:?}", window);
-
-        let atom_net_wm_name = xcb::intern_atom(&self.connection, false, "_NET_WM_NAME")
-            .get_reply()
-            .expect("failed to intern _NET_WM_NAME atom")
-            .atom();
-
-        self.get_window_name(atom_net_wm_name, window)
-            .or_else(|| self.get_window_name(xcb::ATOM_WM_NAME, window))
+        // First, try to get the EWMH atom and the window name.
+        // If that fails, fall back to WM_NAME.
+        let reply = xcb::intern_atom(&self.connection, false, "_NET_WM_NAME").get_reply()
+            .map_err(|err| format!("{:?}", err))?;
+        self.get_window_name(reply.atom(), window)
+            .or_else(|_| self.get_window_name(xcb::ATOM_WM_NAME, window))
     }
 
     fn class_name(&self, window: Self::Window) -> String {

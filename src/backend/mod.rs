@@ -89,7 +89,7 @@ pub trait Backend {
     /// A string representing the [`Window`]'s title.
     ///
     /// [`Window`]: trait.Backend.html#associatedtype.Window
-    fn window_name(&self, window: Self::Window) -> Option<String>;
+    fn window_name(&self, window: Self::Window) -> Result<String>;
     /// Returns the given [`Window`]s class name.
     /// Useful for custom mappings, e.g. always move `mpv` to
     /// workspace 4.
