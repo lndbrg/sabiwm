@@ -7,7 +7,7 @@ use xcb;
 /// until Wayland becomes the default environment.
 pub struct Xcb {
     connection: xcb::Connection,
-    root: xcb::ffi::xproto::xcb_window_t,
+    root: xcb::Window,
 }
 
 impl Xcb {
@@ -50,6 +50,24 @@ impl Xcb {
               screen.width_in_pixels(),
               screen.height_in_pixels());
         screen.root()
+    }
+
+    fn get_window_name(&self, atom: xcb::Atom, window: xcb::Window) -> Option<String> {
+
+        xcb::get_property(&self.connection,
+                          false,
+                          window,
+                          atom,
+                          xcb::ATOM_STRING,
+                          0,
+                          u32::max_value())
+            .get_reply()
+            .ok()
+            .and_then(|reply| if reply.value_len() > 0 {
+                Some(String::from_utf8(reply.value().to_vec()).unwrap())
+            } else {
+                None
+            })
     }
 }
 
@@ -95,37 +113,14 @@ impl Backend for Xcb {
 
     fn window_name(&self, window: Self::Window) -> Option<String> {
         trace!("retrieving name of window {:?}", window);
+
         let atom_net_wm_name = xcb::intern_atom(&self.connection, false, "_NET_WM_NAME")
             .get_reply()
             .expect("failed to intern _NET_WM_NAME atom")
             .atom();
 
-        xcb::get_property(&self.connection,
-                          false,
-                          window,
-                          atom_net_wm_name,
-                          xcb::ATOM_STRING,
-                          0,
-                          u32::max_value())
-            .get_reply()
-            .ok()
-            .and_then(|reply| if reply.value_len() > 0 {
-                Some(String::from_utf8(reply.value().to_vec()).unwrap())
-            } else {
-                None
-            }
-            ).or_else(||
-              xcb::get_property(&self.connection,
-                                false,
-                                window,
-                                xcb::ATOM_WM_NAME,
-                                xcb::ATOM_STRING,
-                                0,
-                                u32::max_value())
-                .get_reply()
-                .ok()
-                .and_then(|reply| Some(String::from_utf8(reply.value().to_vec()).unwrap()))
-        )
+        self.get_window_name(atom_net_wm_name, window)
+            .or_else(|| self.get_window_name(xcb::ATOM_WM_NAME, window))
     }
 
     fn class_name(&self, window: Self::Window) -> String {
