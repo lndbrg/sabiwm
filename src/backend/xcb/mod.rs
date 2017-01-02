@@ -93,9 +93,39 @@ impl Backend for Xcb {
         self.connection.get_setup().roots_len() as usize
     }
 
-    fn window_name(&self, window: Self::Window) -> String {
+    fn window_name(&self, window: Self::Window) -> Option<String> {
         trace!("retrieving name of window {:?}", window);
-        unimplemented!();
+        let atom_net_wm_name = xcb::intern_atom(&self.connection, false, "_NET_WM_NAME")
+            .get_reply()
+            .expect("failed to intern _NET_WM_NAME atom")
+            .atom();
+
+        xcb::get_property(&self.connection,
+                          false,
+                          window,
+                          atom_net_wm_name,
+                          xcb::ATOM_STRING,
+                          0,
+                          u32::max_value())
+            .get_reply()
+            .ok()
+            .and_then(|reply| if reply.value_len() > 0 {
+                Some(String::from_utf8(reply.value().to_vec()).unwrap())
+            } else {
+                None
+            }
+            ).or_else(||
+              xcb::get_property(&self.connection,
+                                false,
+                                window,
+                                xcb::ATOM_WM_NAME,
+                                xcb::ATOM_STRING,
+                                0,
+                                u32::max_value())
+                .get_reply()
+                .ok()
+                .and_then(|reply| Some(String::from_utf8(reply.value().to_vec()).unwrap()))
+        )
     }
 
     fn class_name(&self, window: Self::Window) -> String {
