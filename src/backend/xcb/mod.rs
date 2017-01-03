@@ -52,6 +52,13 @@ impl Xcb {
         screen.root()
     }
 
+    fn get_interned_atom(&self, atom: &str) -> Result<xcb::Atom> {
+        Ok(xcb::intern_atom(&self.connection, false, atom)
+            .get_reply()
+            .map_err(|_| format!("unable to get atom {}", atom))?
+            .atom())
+    }
+
     fn get_string_atom(&self, atom: xcb::Atom, window: xcb::Window) -> Result<String> {
         let reply = xcb::get_property(&self.connection,
                                       false,
@@ -63,7 +70,7 @@ impl Xcb {
             .map_err(|err| format!("{:?}", err))?;
         match String::from_utf8(reply.value().to_vec()) {
             Ok(ref name) if name.len() > 0 => Ok(name.clone()),
-            _ => bail!("unable to get window name"),
+            _ => bail!("unable to get property"),
         }
     }
 }
@@ -89,7 +96,20 @@ impl Backend for Xcb {
 
     fn is_dock(&self, window: Self::Window) -> bool {
         trace!("checking if {:?} is a dock", window);
-        unimplemented!();
+        let dock = try_or_false!(self.get_interned_atom("_NET_WM_WINDOW_TYPE_DOCK"));
+        let desk = try_or_false!(self.get_interned_atom("_NET_WM_WINDOW_TYPE_DESKTOP"));
+        let window_type = try_or_false!(self.get_interned_atom("_NET_WM_WINDOW_TYPE"));
+
+        xcb::get_property(&self.connection,
+                          false,
+                          window,
+                          window_type,
+                          xcb::ATOM_ATOM,
+                          0,
+                          u32::max_value())
+            .get_reply()
+            .iter()
+            .any(|x| x.type_() == dock || x.type_() == desk)
     }
 
     fn is_window(&self, window: Self::Window) -> bool {
@@ -112,9 +132,8 @@ impl Backend for Xcb {
         trace!("retrieving name of window {:?}", window);
         // First, try to get the EWMH atom and the window name.
         // If that fails, fall back to WM_NAME.
-        let reply = xcb::intern_atom(&self.connection, false, "_NET_WM_NAME").get_reply()
-            .map_err(|err| format!("{:?}", err))?;
-        self.get_string_atom(reply.atom(), window)
+        let atom = self.get_interned_atom("_NET_WM_NAME")?;
+        self.get_string_atom(atom, window)
             .or_else(|_| self.get_string_atom(xcb::ATOM_WM_NAME, window))
     }
 

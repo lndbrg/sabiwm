@@ -46,6 +46,8 @@ extern crate xdg;
 #[macro_use]
 extern crate error_chain;
 
+#[macro_use]
+mod macros;
 pub mod backend;
 pub mod core;
 
