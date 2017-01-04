@@ -2,12 +2,23 @@ use backend::{Backend, Event};
 use core::Rectangle;
 use errors::*;
 use xcb;
+use xcb::{GetGeometryReply};
 
 /// The Xcb backend. This backend shall be the default,
 /// until Wayland becomes the default environment.
 pub struct Xcb {
     connection: xcb::Connection,
     root: xcb::Window,
+}
+
+impl From<GetGeometryReply> for Rectangle {
+    fn from(screen: GetGeometryReply) -> Self {
+        Rectangle::new(screen.x() as i32,
+                       screen.y() as i32,
+                       screen.width() as u32,
+                       screen.height() as u32
+        )
+    }
 }
 
 impl Xcb {
@@ -121,7 +132,14 @@ impl Backend for Xcb {
 
     fn screens(&self) -> Vec<Rectangle> {
         trace!("getting screen layout information");
-        unimplemented!();
+        // TODO: get screens from randr and create a root window our selved per crtc?
+        self.connection.get_setup().roots()
+            .map(|screen| screen.root())
+            .map(|window| xcb::get_geometry(&self.connection, window).get_reply())
+            // Discard and none ok replies, we can't really do anything about them anyway.
+            .filter_map(|reply| reply.ok())
+            .map(|geometry| Rectangle::from(geometry))
+            .collect()
     }
 
     fn number_of_screens(&self) -> usize {
